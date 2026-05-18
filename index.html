@@ -969,7 +969,7 @@ function calculate() {
 // FormSubmit.co 무료 서비스를 사용하며, 첫 제출 시 해당 주소로 1회 인증 메일이 옵니다.
 // 인증 링크 클릭 후부터 모든 제출 내용이 정상 발송됩니다.
 const INQUIRY_EMAIL = 'gongganlog@daum.net';
-const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/ajax/' + INQUIRY_EMAIL;
+const FORMSUBMIT_ENDPOINT = 'https://formspree.io/f/xojbqkaw';
 
 // 계산기 state 값을 사람이 읽을 수 있는 한글로 변환
 function getCalcContext() {
@@ -999,12 +999,7 @@ async function sendInquiryEmail(payload) {
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
     body: JSON.stringify(payload),
   });
-  if (!res.ok) throw new Error('네트워크 오류 (' + res.status + ')');
-  const data = await res.json();
-  if (data.success !== 'true' && data.success !== true) {
-    throw new Error(data.message || '발송 실패');
-  }
-  return data;
+return await res.json();
 }
 
 async function submitCalcForm(btn) {
